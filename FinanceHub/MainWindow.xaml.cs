@@ -26,6 +26,17 @@ namespace FinanceHub
             var myTabHolder = new TabHolder(new FileSystem());
             FinanceHubSettings settings = myTabHolder.GetStartingTab();
             Dispatcher.BeginInvoke((Action)(() => MyTabControl.SelectedIndex = settings.CurrentTab));
+
+
+           
+
+        }
+
+       private void OnTabSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int current = ((TabControl)sender).SelectedIndex;
+            var myTabHolder = new TabHolder(new FileSystem());
+            myTabHolder.SaveTab(current);
         }
     }
 }

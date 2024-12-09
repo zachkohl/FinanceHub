@@ -9,15 +9,16 @@ using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers.Interfaces;
 using Moq;
 using Xunit;
 using FinanceHub.Controllers;
+using Castle.DynamicProxy;
 namespace FinanceHub.Tests
 {
 
 
     public class TabHolder_tests
     {
+        private string _defaultSettings = $"{{\"CurrentTab\": 0 }}";
 
         [Fact]
-
         public void TabHolder_getStartingTab_checksIfaConfigFileExistsAndIfNotCreatesIt()
         {
             //Arrange
@@ -25,7 +26,7 @@ namespace FinanceHub.Tests
             var internalFile = Mock.Of<IFile>();
             Mock.Get(internalFile).Setup(f => f.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
             Mock.Get(internalFile).Setup(f => f.Exists(It.IsAny<string>())).Returns(false);
-            Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns($"{{\"CurrentTab\": 0 }}");
+            Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns(_defaultSettings);
 
             var fileSystem = Mock.Of<IFileSystem>();
             Mock.Get(fileSystem).Setup(static f => f.File).Returns(internalFile);
@@ -52,7 +53,6 @@ namespace FinanceHub.Tests
         [Theory]
         [InlineData((int)TabHolder.TabOptions.Input)]
         [InlineData((int)TabHolder.TabOptions.Data)]
-
         public void TabHolder_getStartingTab_returnsCorrectTabFromFile(int tab)
         {
             //Arrange
@@ -71,6 +71,32 @@ namespace FinanceHub.Tests
             Assert.Equal(settings.CurrentTab, tab);
 
         }
+
+        [Fact]
+        public void TabHolder_saveChanges_savesTheTabOptionToAFile()
+        {
+            //arrange
+            var internalFile = Mock.Of<IFile>();
+            Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns(_defaultSettings);
+            Mock.Get(internalFile).Setup(f => f.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
+
+            var fileSystem = SetupMultiLevelFileMock(internalFile);
+
+            var MyTablHolder = new TabHolder(fileSystem);
+
+            //Act
+            MyTablHolder.SaveTab(0);
+
+            //Assert
+            Mock.Get(internalFile).Verify(f => f.WriteAllText(It.IsAny<string>(), It.IsAny<string>()),Times.Once);
+        }
+
+        private IFileSystem SetupMultiLevelFileMock(IFile f)
+        {
+            var fileSystem = Mock.Of<IFileSystem>();
+            Mock.Get(fileSystem).Setup(static f => f.File).Returns(f);
+            return fileSystem;
+        } 
+
     }
- 
 }
