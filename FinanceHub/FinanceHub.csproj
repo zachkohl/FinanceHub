@@ -9,8 +9,11 @@
   </PropertyGroup>
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-			<_Parameter1>FinanceHubTests</_Parameter1>
+			<_Parameter1>FinanceHub.Tests</_Parameter1>
 		</AssemblyAttribute>
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="21.1.7" />
 	</ItemGroup>
 
 </Project>

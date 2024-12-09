@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <TabControl Name="MyTabControl">
+            <TabItem Header="Input">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Data">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

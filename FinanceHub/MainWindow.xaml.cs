@@ -8,6 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FinanceHub.Controllers;
+using System.IO;
+using System.IO.Abstractions;
 
 namespace FinanceHub
 {
@@ -19,6 +22,10 @@ namespace FinanceHub
         public MainWindow()
         {
             InitializeComponent();
+
+            var myTabHolder = new TabHolder(new FileSystem());
+            FinanceHubSettings settings = myTabHolder.GetStartingTab();
+            Dispatcher.BeginInvoke((Action)(() => MyTabControl.SelectedIndex = settings.CurrentTab));
         }
     }
 }
