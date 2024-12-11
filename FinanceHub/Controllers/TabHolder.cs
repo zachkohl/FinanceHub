@@ -7,53 +7,27 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FinanceHub.DataBase;
 using Microsoft.VisualBasic;
 
 namespace FinanceHub.Controllers
 {
-    internal class TabHolder
+    internal class TabHolder: RememberState
     {
-        readonly IFileSystem fileSystem;
-
-
-
-
-        public TabHolder(IFileSystem fileSystem)
-        {
-            this.fileSystem = fileSystem;
-        }
-
-        private string _fileName = "settings.json";
-
+      
+        public TabHolder(IFileSystem fileSystem) : base(fileSystem)
+        { }   
+        
         public enum TabOptions  {Input, Data}
 
         public FinanceHubSettings GetStartingTab()
         {
-            
-
-            if (!this.fileSystem.File.Exists(_fileName))
-            {
-               FinanceHubSettings settings = new FinanceHubSettings { CurrentTab= (int)TabHolder.TabOptions.Input};
-                WriteSettings(settings);
-            }
 
             FinanceHubSettings SettingsFromFile = ReadSettings();
 
             return SettingsFromFile;
         }
-        private FinanceHubSettings ReadSettings()
-        {
-            var SettingsFromFile =  JsonSerializer.Deserialize<FinanceHubSettings>(this.fileSystem.File.ReadAllText(_fileName));
-            return SettingsFromFile == null
-          ? throw new ArgumentNullException("settings.json was damaged somehow")
-          : SettingsFromFile;
-        }
-
-        private void WriteSettings(FinanceHubSettings Settings)
-        {
-            string jsonString = JsonSerializer.Serialize(Settings);
-            this.fileSystem.File.WriteAllText(_fileName, jsonString);
-        }
+       
 
         public void SaveTab(int tab)
         {
@@ -64,9 +38,5 @@ namespace FinanceHub.Controllers
 
     }
 
-    public class FinanceHubSettings
-    {
-        public int CurrentTab { get; set; }
-    }
 
 }

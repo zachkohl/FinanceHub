@@ -18,7 +18,7 @@ namespace FinanceHub.DataBase
 
         public void connectForUser(string name)
         {
-            _db.createDBForUser(name);
+            _db.connectForUser(name);
         }
 
         public void createDBForUser(string name)

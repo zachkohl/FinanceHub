@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FinanceHub.DataBase
 {
-    interface IDB
+   public interface IDB
     {
-        void connectForUser(string name);
-        void createDBForUser(string name);
+        public void connectForUser(string name);
+        public void createDBForUser(string name);
 
-        void deleteDBForUser(string name);
+        public void deleteDBForUser(string name);
     }
 }

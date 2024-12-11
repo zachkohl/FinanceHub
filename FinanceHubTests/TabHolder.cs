@@ -78,6 +78,7 @@ namespace FinanceHub.Tests
             //arrange
             var internalFile = Mock.Of<IFile>();
             Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns(_defaultSettings);
+            Mock.Get(internalFile).Setup(f => f.Exists(It.IsAny<string>())).Returns(true);
             Mock.Get(internalFile).Setup(f => f.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
 
             var fileSystem = SetupMultiLevelFileMock(internalFile);
