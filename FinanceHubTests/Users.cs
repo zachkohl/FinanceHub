@@ -34,19 +34,28 @@ namespace FinanceHub.Tests
         }
 
 
-        [Fact]
-        public void Users_getCurrentUser_returns_nullWhenNoCurrentUserExist()
+        [Theory]
+        [InlineData("testExoticUser")]
+        [InlineData(null)]
+        public void Users_getCurrentUser_returns_UserOrNull(string? name)
         {
             var internalFile = Mock.Of<IFile>();
             Mock.Get(internalFile).Setup(f => f.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
-            Mock.Get(internalFile).Setup(f => f.Exists(It.IsAny<string>())).Returns(true);           
-            Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns(prepSettings(new FinanceHubSettings { CurrentTab = 0, CurrentUser = "testUserY" }));
+            Mock.Get(internalFile).Setup(f => f.Exists(It.IsAny<string>())).Returns(true);
+            Moq.Language.Flow.IReturnsResult<IFile> returnsResult = Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns(prepSettings(settings: new FinanceHubSettings { CurrentTab = 0, CurrentUser = name, Users = name == null ? [] : [name] }));
             var fileSystem = Mock.Of<IFileSystem>();
             Mock.Get(fileSystem).Setup(static f => f.File).Returns(internalFile);
             Users MyUsers = new Users(fileSystem,_db);
             var MyUser = MyUsers.GetCurrentUser();
-
-            Assert.NotNull(MyUser);
+            if (name == null)
+            {
+                Assert.Null(MyUser);
+            }
+            else
+            {
+                Assert.Equal(name, MyUser?.Name);
+            }
+           
         }
 
         [Fact]
@@ -69,6 +78,31 @@ namespace FinanceHub.Tests
             _db.connectForUser(_name);
             Mock.Get(internalFile).Verify(f => f.WriteAllText(It.IsAny<string>(),It.IsAny<string>()), Times.Once);
 
+        }
+
+        [Fact]
+        public void Users_CreateUser_RejectsBadName()
+        {
+            //Arrange
+            string name = "this is not a valid name";
+            var internalFile = Mock.Of<IFile>();
+            Mock.Get(internalFile).Setup(f => f.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
+            Mock.Get(internalFile).Setup(f => f.Exists(It.IsAny<string>())).Returns(true);
+            string[] users = ["Y", "X"];
+            var newSettings = new FinanceHubSettings { CurrentTab = 0, CurrentUser = "Y", Users = users };
+            Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns(prepSettings(newSettings));
+            var fileSystem = Mock.Of<IFileSystem>();
+            Mock.Get(fileSystem).Setup(static f => f.File).Returns(internalFile);
+            var mockDb = Mock.Of<IDB>();
+            Mock.Get(mockDb).Setup(db => db.deleteDBForUser(It.IsAny<string>()));
+
+
+            //Act
+            Users MyUsers = new Users(fileSystem, _db);
+           bool success= MyUsers.CreateUser(name);
+
+            //Assert
+            Assert.False(success);
         }
 
         [Fact]

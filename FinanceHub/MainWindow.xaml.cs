@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 using FinanceHub.Controllers;
 using System.IO;
 using System.IO.Abstractions;
+using FinanceHub.DataBase;
+using FinanceHub.Views;
+
 
 namespace FinanceHub
 {
@@ -19,16 +22,26 @@ namespace FinanceHub
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        internal Users _users;
         public MainWindow()
         {
+            _users = new Users(new FileSystem(), new DBWrapper());
+
             InitializeComponent();
 
             var myTabHolder = new TabHolder(new FileSystem());
             FinanceHubSettings settings = myTabHolder.GetStartingTab();
             Dispatcher.BeginInvoke((Action)(() => MyTabControl.SelectedIndex = settings.CurrentTab));
 
-
            
+            User? myUser = _users.GetCurrentUser();
+            if (myUser == null)
+            {
+               AddUser MyAddUser = new AddUser(_users, InputGrid);
+                InputGrid.Children.Add(MyAddUser);
+           
+            }
 
         }
 

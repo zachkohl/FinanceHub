@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using FinanceHub.DataBase;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceHub.Controllers
 {
-    internal class Users : RememberState
+    public class Users(IFileSystem fileSystem, IDB DbWrapper) : RememberState(fileSystem)
     {
-        IDB _db;
+        IDB _db = DbWrapper;
+        User? _user;
 
-        public Users(IFileSystem fileSystem,IDB DbWrapper) : base(fileSystem) 
-        {
-            _db =  DbWrapper;
-        }
         public User? GetCurrentUser()
         {
             FinanceHubSettings settings = ReadSettings();
@@ -24,11 +23,18 @@ namespace FinanceHub.Controllers
             {
                 return null;
             }
-            return new User(_db) { Name = settings.CurrentUser };
+            SwitchUser(settings.CurrentUser);
+            return _user;
         }
 
-        public User CreateUser(string name)
+        public bool CreateUser(string name)
         {
+
+            if (!Regex.IsMatch(name, @"^[a-zA-Z]+$"))
+            {
+                return false;
+            }
+
             FinanceHubSettings settings = ReadSettings();
             if (settings.Users == null)
             {
@@ -45,12 +51,12 @@ namespace FinanceHub.Controllers
             _db.createDBForUser(name);
             WriteSettings(settings);
 
-            User myUser = new User(_db) { Name = name };
-            return myUser;
+            SwitchUser(name);
+            return true;
         }
 
 
-        public User SwitchUser(string name)
+        public bool SwitchUser(string name)
         {
             FinanceHubSettings settings = ReadSettings();
             if (!settings.Users.Contains<string>(name))
@@ -60,8 +66,8 @@ namespace FinanceHub.Controllers
             settings.CurrentUser = name;
             _db.connectForUser(name);
             WriteSettings(settings);
-
-            return new User(_db);
+            _user = new User(_db) { Name = name };
+            return true;
         }
 
         public void DeleteUser(string name)
@@ -85,7 +91,7 @@ namespace FinanceHub.Controllers
 
     }
 
-class User(IDB db)
+public class User(IDB db)
     {
        public string? Name { get; set; }
         public IDB db = db;

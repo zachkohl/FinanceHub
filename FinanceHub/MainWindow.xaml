@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceHub"
+        xmlns:views="clr-namespace:FinanceHub.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TabControl Name="MyTabControl" Selector.SelectionChanged="OnTabSelectionChanged">
             <TabItem Header="Input">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5" Name="InputGrid">
+                   
+                </Grid>
+
             </TabItem>
             <TabItem Header="Data">
                 <Grid Background="#FFE5E5E5"/>

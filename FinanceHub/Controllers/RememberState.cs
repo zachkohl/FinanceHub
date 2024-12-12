@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace FinanceHub.Controllers
 {
-    abstract class RememberState
+   public abstract class RememberState
     {
         internal string _fileName = "settings.json";
 
