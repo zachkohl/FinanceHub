@@ -7,11 +7,21 @@
         xmlns:views="clr-namespace:FinanceHub.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <StackPanel>
+        <Menu>
+            <MenuItem Header="_Users">
+                <MenuItem Header="Switch User" Click="muSwitchUser_click"/>
+                <MenuItem Header="Create User" Click="muCreateUser_click"/>
+                <MenuItem Header="Delete User" Click="muDeleteuser_click"/>
+                </MenuItem>
+        </Menu>
+        <Grid>
+      
         <TabControl Name="MyTabControl" Selector.SelectionChanged="OnTabSelectionChanged">
             <TabItem Header="Input">
                 <Grid Background="#FFE5E5E5" Name="InputGrid">
-                   
+                
+
                 </Grid>
 
             </TabItem>
@@ -21,4 +31,5 @@
         </TabControl>
 
     </Grid>
+    </StackPanel>
 </Window>

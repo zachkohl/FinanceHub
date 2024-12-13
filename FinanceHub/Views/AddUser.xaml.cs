@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FinanceHub.Controllers;
 using FinanceHub;
+using static FinanceHub.MainWindow;
 
 namespace FinanceHub.Views
 {
@@ -23,11 +24,11 @@ namespace FinanceHub.Views
     public partial class AddUser : UserControl
     {
         public Users _users;
-        public Grid _InputGrid;
-        public AddUser(Users users, Grid InputGrid)
+        public resetToInputView _callback;
+        public AddUser(Users users, resetToInputView callback)
         {
+            _callback = callback;
             _users = users;
-            _InputGrid = InputGrid;
             InitializeComponent();
         }
 
@@ -40,12 +41,7 @@ namespace FinanceHub.Views
             }
             if (success == true)
             {
-               
-
-                _InputGrid.Children.Clear();
-                InputData MyAddUser = new InputData(_users, _InputGrid);
-                _InputGrid.Children.Add(MyAddUser);
-
+                _callback();
             }
 
         }

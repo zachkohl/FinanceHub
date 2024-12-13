@@ -89,6 +89,21 @@ namespace FinanceHub.Controllers
 
         }
 
+
+        public List<string> GetUsersNotCurrentUser()
+        {
+            FinanceHubSettings settings = ReadSettings();
+            string? currentUser = settings.CurrentUser;
+            if (currentUser == null)
+            {
+                throw new Exception("cannot read settings to get list of users");
+            }
+
+            List<string> list = settings.Users.ToList<string>();
+            list.Remove(currentUser);
+            return list;
+        }
+
     }
 
 public class User(IDB db)

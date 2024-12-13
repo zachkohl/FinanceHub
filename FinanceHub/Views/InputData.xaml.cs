@@ -22,11 +22,10 @@ namespace FinanceHub.Views
     public partial class InputData : UserControl
     {
         public Users _users;
-        public Grid _InputGrid;
-        public InputData(Users users, Grid InputGrid)
+        public InputData(Users users)
         {
             _users = users;
-            _InputGrid = InputGrid;
+    
             InitializeComponent();
         }
     }

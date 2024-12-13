@@ -65,7 +65,10 @@ namespace FinanceHub.Tests
             var internalFile = Mock.Of<IFile>();
             Mock.Get(internalFile).Setup(f => f.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
             Mock.Get(internalFile).Setup(f => f.Exists(It.IsAny<string>())).Returns(true);
-            Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns(prepSettings(new FinanceHubSettings { CurrentTab = 0, CurrentUser = "testUserY" }));
+            Mock.Get(internalFile).SetupSequence(f => f.ReadAllText(It.IsAny<string>()))
+                .Returns(prepSettings(new FinanceHubSettings { CurrentTab = 0, CurrentUser = "testUserY" }))
+                .Returns(prepSettings(new FinanceHubSettings { CurrentTab = 0, CurrentUser = "testUserY", Users = ["testUserY",_name] }));
+
             var fileSystem = Mock.Of<IFileSystem>();
             Mock.Get(fileSystem).Setup(static f => f.File).Returns(internalFile);
 
@@ -76,7 +79,7 @@ namespace FinanceHub.Tests
 
             ////Assert
             _db.connectForUser(_name);
-            Mock.Get(internalFile).Verify(f => f.WriteAllText(It.IsAny<string>(),It.IsAny<string>()), Times.Once);
+            Mock.Get(internalFile).Verify(f => f.WriteAllText(It.IsAny<string>(),It.IsAny<string>()), Times.Exactly(2));
 
         }
 
@@ -166,6 +169,33 @@ namespace FinanceHub.Tests
 
         }
 
+        [Fact]
+public void Users_GetUsersNotCurrentUser_ReturnsAListOfUsersButNotTheCurrentUser()
+        {
+            //Arrange
+            string otherUser = "removeMe";
+            string defaultUser = "defaultUser";
+            var internalFile = Mock.Of<IFile>();
+            string[] users = [defaultUser, otherUser];
 
+            var newSettings = new FinanceHubSettings { CurrentTab = 0, CurrentUser = defaultUser, Users = users };
+
+            Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns(prepSettings(newSettings));
+            var fileSystem = Mock.Of<IFileSystem>();
+            Mock.Get(fileSystem).Setup(static f => f.File).Returns(internalFile);
+            var mockDb = Mock.Of<IDB>();
+
+
+            //Act
+            Users MyUsers = new Users(fileSystem, mockDb);
+            List<string> list = MyUsers.GetUsersNotCurrentUser();
+
+
+            //Assert
+            Assert.Single(list);
+            Assert.Equal(otherUser, list.First());
+
+
+        }
     }
 }
