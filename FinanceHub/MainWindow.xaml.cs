@@ -31,13 +31,15 @@ namespace FinanceHub
             _resetInputView = () =>
             {
                 InputGrid.Children.Clear();
+                InputDataArea area = new InputDataArea(_users);
+                InputGrid.Children.Add(area);
             };
             InitializeComponent();
 
             var myTabHolder = new TabHolder(new FileSystem());
             FinanceHubSettings settings = myTabHolder.GetStartingTab();
             Dispatcher.BeginInvoke((Action)(() => MyTabControl.SelectedIndex = settings.CurrentTab));
-
+            _resetInputView();
            
             User? myUser = _users.GetCurrentUser();
             if (myUser == null)
@@ -58,19 +60,12 @@ namespace FinanceHub
 
 
 
-        public void resetCallBack()
-        {
-            InputGrid.Children.Clear();
-            InputData MyAddUser = new InputData(_users);
-            InputGrid.Children.Add(MyAddUser);
-        }
       
 
 
         private void muSwitchUser_click(object sender, RoutedEventArgs e)
         {
-            resetToInputView callback = resetCallBack;
-            SwitchUser mySwitchUser = new SwitchUser(_users, callback);
+            SwitchUser mySwitchUser = new SwitchUser(_users, _resetInputView);
             InputGrid.Children.Clear();
             InputGrid.Children.Add(mySwitchUser);
         }

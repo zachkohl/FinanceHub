@@ -8,7 +8,7 @@ using System.Windows;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-
+using FinanceHub.Models;
 
 namespace FinanceHub.DataBase
 {
@@ -26,7 +26,7 @@ namespace FinanceHub.DataBase
             _EF = new AppDBContext(optionsBuilder.Options);
         }
 
-        public void connectForUser(string name)
+        public  void connectForUser(string name)
         {
         
             var optionsBuilder = new DbContextOptionsBuilder<AppDBContext>();
@@ -34,6 +34,7 @@ namespace FinanceHub.DataBase
             optionsBuilder.UseSqlServer(connectionString);
             optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
             _EF = new AppDBContext(optionsBuilder.Options);
+            
         }
 
         private async Task<bool> ExecuteQuery(string rawSql)
@@ -82,7 +83,7 @@ namespace FinanceHub.DataBase
              "MAXSIZE = 5MB, " +
              "FILEGROWTH = 10%)";
           await  ExecuteQuery(str);
-            connectForUser(name);
+         connectForUser(name);
             _EF.Database.Migrate();
 
         }
@@ -96,5 +97,10 @@ namespace FinanceHub.DataBase
           await ExecuteQuery($"DROP DATABASE IF EXISTS {name}");
         }
 
+        public void saveTransactions(List<Transaction> transactions)
+        {
+            _EF.Transactions?.AddRange(transactions);
+            _EF.SaveChanges();
+        }
     }
 }

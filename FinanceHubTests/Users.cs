@@ -8,7 +8,10 @@ using FinanceHub.Controllers;
 using FinanceHub.DataBase;
 using Moq;
 using System.Text.Json;
+using FinanceHub.Models;
+
 namespace FinanceHub.Tests
+
 {
     public class Users_Tests : IDisposable
     {
@@ -197,5 +200,43 @@ public void Users_GetUsersNotCurrentUser_ReturnsAListOfUsersButNotTheCurrentUser
 
 
         }
+        [Fact]
+
+public void Users_processFileForActiveUser_processesCSVFile()
+        {
+            //Arrange
+            string csvData = @"Date,Description,Original Description,Category,Amount,Status
+12/12/2024,SQ *TERRE COFFEE & B             121224,SQ *TERRE COFFEE & B             121224,Category Pending,-3.5,Pending
+";
+
+            Transaction myTransaction = new Transaction { Date=new DateOnly(2024,12,12),Amount = -3.5m,Description= "SQ *TERRE COFFEE & B             121224",OriginalDescription= "SQ *TERRE COFFEE & B             121224",BankCatagory= "Category Pending",BankStatus="Pending" };
+            List<Transaction> mockList = new List<Transaction>() { myTransaction};
+           
+            
+            string defaultUser = "defaultUser";
+            var internalFile = Mock.Of<IFile>();
+            string[] users = [defaultUser];
+            Mock.Get(internalFile).Setup(f => f.Exists(It.IsAny<string>())).Returns(true);
+
+            var newSettings = new FinanceHubSettings { CurrentTab = 0, CurrentUser = defaultUser, Users = users };
+
+            Mock.Get(internalFile).SetupSequence(f => f.ReadAllText(It.IsAny<string>()))
+                .Returns(csvData);
+            var fileSystem = Mock.Of<IFileSystem>();
+            Mock.Get(fileSystem).Setup(static f => f.File).Returns(internalFile);
+            var mockDb = Mock.Of<IDB>();
+            Mock.Get(mockDb).Setup(static db => db.saveTransactions(It.IsAny<List<Transaction>>()));
+            Users myUsers = new Users(fileSystem, mockDb);
+
+
+            //Act
+            myUsers.processFileForActiveUser("testFilePath");
+
+            //Assert
+              Mock.Get(mockDb).Verify(db => db.saveTransactions(It.IsAny<List<Transaction>>()));
+
+
+        }
+
     }
 }

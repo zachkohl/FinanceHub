@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FinanceHub.Models;
 
 namespace FinanceHub.DataBase
 {
@@ -29,6 +30,11 @@ namespace FinanceHub.DataBase
         public void deleteDBForUser(string name)
         {
             _db.deleteDBForUser(name);
+        }
+
+        public void saveTransactions(List<Transaction> transactions)
+        {
+            _db.saveTransactions(transactions);
         }
     }
 }

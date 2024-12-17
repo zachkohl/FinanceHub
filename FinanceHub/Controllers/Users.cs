@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using FinanceHub.DataBase;
 using Microsoft.EntityFrameworkCore;
-
+using FileHelpers;
+using FinanceHub.Models;
 namespace FinanceHub.Controllers
 {
     public class Users(IFileSystem fileSystem, IDB DbWrapper) : RememberState(fileSystem)
@@ -102,6 +103,22 @@ namespace FinanceHub.Controllers
             List<string> list = settings.Users.ToList<string>();
             list.Remove(currentUser);
             return list;
+        }
+
+        public bool processFileForActiveUser(string path)
+        {
+
+            if (_fileSystem.File.Exists(path) == false)
+            {
+                throw new Exception("cannot find file");
+            }
+            var csvString = _fileSystem.File.ReadAllText(path);
+
+            var transactions = CSVReader.Process(csvString);
+
+
+            _db.saveTransactions(transactions);
+            return true;
         }
 
     }

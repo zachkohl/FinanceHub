@@ -17,7 +17,7 @@
         </Menu>
         <Grid>
       
-        <TabControl Name="MyTabControl" Selector.SelectionChanged="OnTabSelectionChanged">
+        <TabControl Width="Auto" Name="MyTabControl" Selector.SelectionChanged="OnTabSelectionChanged">
             <TabItem Header="Input">
                 <Grid Background="#FFE5E5E5" Name="InputGrid">
                 
