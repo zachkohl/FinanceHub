@@ -32,6 +32,11 @@ namespace FinanceHub.DataBase
             _db.deleteDBForUser(name);
         }
 
+        public List<Transaction> GetAllTransactions()
+        {
+            return _db.GetAllTransactions();
+        }
+
         public void saveTransactions(List<Transaction> transactions)
         {
             _db.saveTransactions(transactions);

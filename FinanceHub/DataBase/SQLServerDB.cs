@@ -70,21 +70,16 @@ namespace FinanceHub.DataBase
             return true;
         }
 
-        public async void createDBForUser(string name)
+        public void createDBForUser(string name)
         {
-          
-          string  str = "CREATE DATABASE "+name+" ON PRIMARY " +
-             "(NAME = "+ name+"_Data, " +
-             "FILENAME = 'C:\\SQLServerDatabases\\"+name+"Data.mdf', " +
-             "SIZE = 2MB, MAXSIZE = 10MB, FILEGROWTH = 10%)" +
-             "LOG ON (NAME = "+name+"_Log, " +
-             "FILENAME = 'C:\\SQLServerDatabases\\"+name+"Log.ldf', " +
-             "SIZE = 1MB, " +
-             "MAXSIZE = 5MB, " +
-             "FILEGROWTH = 10%)";
-          await  ExecuteQuery(str);
-         connectForUser(name);
-            _EF.Database.Migrate();
+
+
+            var optionsBuilder = new DbContextOptionsBuilder<AppDBContext>();
+            var connectionString = string.Format("Server=ZACHDELL;Integrated security=SSPI;database={0};TrustServerCertificate=True;", name);
+            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+            _EF = new AppDBContext(optionsBuilder.Options);
+
 
         }
 
@@ -92,7 +87,6 @@ namespace FinanceHub.DataBase
         {
               connectForUser("master");
           await ExecuteQuery($"Use master;");
-            //ExecuteQuery($"DELAY 00:00:05");
 
           await ExecuteQuery($"DROP DATABASE IF EXISTS {name}");
         }
@@ -101,6 +95,11 @@ namespace FinanceHub.DataBase
         {
             _EF.Transactions?.AddRange(transactions);
             _EF.SaveChanges();
+        }
+
+        public List<Transaction> GetAllTransactions()
+        {
+           return _EF.Transactions!.ToList();
         }
     }
 }

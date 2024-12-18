@@ -86,6 +86,11 @@ namespace FinanceHub.Controllers
             }
             settings.Users = list.ToArray();
             _db.deleteDBForUser(name);
+            if (settings.CurrentUser == null)
+            {
+                throw new Exception("default user not found in settings.json");
+            }
+            _db.connectForUser(settings.CurrentUser);
             WriteSettings(settings);
 
         }

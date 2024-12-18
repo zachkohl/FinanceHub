@@ -18,15 +18,18 @@ namespace FinanceHub.DataBase
 
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
         {
+            //  Database.EnsureCreated();
+            if (Database.GetPendingMigrations().Any())
+            {
+                Database.Migrate();
+            }
+           
         }
 
 
         public DbSet<Transaction>? Transactions { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=ZACHDELL;Integrated security=SSPI;database=zachTwo;TrustServerCertificate=True");
-        }
+
 
     }
 

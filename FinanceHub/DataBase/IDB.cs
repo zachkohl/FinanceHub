@@ -15,5 +15,7 @@ namespace FinanceHub.DataBase
         public void deleteDBForUser(string name);
 
         public void saveTransactions(List<Transaction> transactions);
+
+        public List<Transaction> GetAllTransactions();
     }
 }
