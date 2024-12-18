@@ -27,7 +27,7 @@ namespace FinanceHub.DataBase
         }
 
 
-        public DbSet<Transaction>? Transactions { get; set; }
+        public DbSet<Transaction> Transactions { get; set; } = null!;
 
 
 

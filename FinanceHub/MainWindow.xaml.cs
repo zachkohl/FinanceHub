@@ -28,6 +28,7 @@ namespace FinanceHub
         public MainWindow()
         {
             _users = new Users(new FileSystem(), new DBWrapper());
+            _users.GetCurrentUser();
             _resetInputView = () =>
             {
                 InputGrid.Children.Clear();
@@ -40,7 +41,7 @@ namespace FinanceHub
             FinanceHubSettings settings = myTabHolder.GetStartingTab();
             Dispatcher.BeginInvoke((Action)(() => MyTabControl.SelectedIndex = settings.CurrentTab));
             _resetInputView();
-           
+            DataTabHolder.Children.Add(new DataTabView(_users));
             User? myUser = _users.GetCurrentUser();
             if (myUser == null)
             {

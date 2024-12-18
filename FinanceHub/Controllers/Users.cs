@@ -17,6 +17,7 @@ namespace FinanceHub.Controllers
         IDB _db = DbWrapper;
         User? _user;
 
+
         public User? GetCurrentUser()
         {
             FinanceHubSettings settings = ReadSettings();
@@ -124,6 +125,11 @@ namespace FinanceHub.Controllers
 
             _db.saveTransactions(transactions);
             return true;
+        }
+
+        public List<Transaction> GetAllTransactions()
+        {
+            return _db.GetAllTransactions();
         }
 
     }

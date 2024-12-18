@@ -99,7 +99,7 @@ namespace FinanceHub.DataBase
 
         public List<Transaction> GetAllTransactions()
         {
-           return _EF.Transactions!.ToList();
+            return _EF.Transactions.ToList();
         }
     }
 }

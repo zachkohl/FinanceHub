@@ -25,9 +25,9 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Data">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
+            <TabItem Header="Data" >
+                    <Grid Name="DataTabHolder"/>
+                </TabItem>
         </TabControl>
 
     </Grid>
