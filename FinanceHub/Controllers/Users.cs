@@ -9,7 +9,7 @@ using System.Windows;
 using FinanceHub.DataBase;
 using Microsoft.EntityFrameworkCore;
 using FileHelpers;
-using FinanceHub.Models;
+using FinanceHub.Model;
 namespace FinanceHub.Controllers
 {
     public class Users(IFileSystem fileSystem, IDB DbWrapper) : RememberState(fileSystem)
@@ -29,8 +29,13 @@ namespace FinanceHub.Controllers
             return _user;
         }
 
-        public bool CreateUser(string name)
+        public bool CreateUser(string? name)
         {
+            if (name == null)
+            {
+                return false;
+            }
+
 
             if (!Regex.IsMatch(name, @"^[a-zA-Z]+$"))
             {

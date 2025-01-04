@@ -13,23 +13,27 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FinanceHub.Controllers;
+using FinanceHub.ViewModel;
+using static FinanceHub.MainWindow;
 
-namespace FinanceHub.Views
+namespace FinanceHub.View
 {
     /// <summary>
-    /// Interaction logic for DataTabView.xaml
+    /// Interaction logic for SwitchUser.xaml
     /// </summary>
-    public partial class DataTabView : UserControl
+    public partial class SwitchUser : UserControl
     {
-        public Users _users;
 
-        public DataTabView(Users users)
-        {
-       
-            _users = users;
-            InitializeComponent();
+
         
-            DataGridTransactions.ItemsSource = _users.GetAllTransactions().Select(e=> new {e.Date,e.Amount,e.Description});
+        public SwitchUser()
+        {
+           
+            InitializeComponent();
+
         }
+
+    
+
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FileHelpers;
 
-namespace FinanceHub.Models
+namespace FinanceHub.Model
 {
     [DelimitedRecord(","), IgnoreFirst()]
     public class Transaction

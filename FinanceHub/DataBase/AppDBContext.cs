@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using FileHelpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using FinanceHub.Models;
+using FinanceHub.Model;
 
 namespace FinanceHub.DataBase
 {

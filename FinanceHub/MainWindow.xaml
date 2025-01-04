@@ -4,32 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceHub"
-        xmlns:views="clr-namespace:FinanceHub.Views"
+        xmlns:views="clr-namespace:FinanceHub.View"
+        xmlns:vm="clr-namespace:FinanceHub.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    
+    <Window.DataContext>
+        <vm:MainWindowVM />
+    </Window.DataContext>
+    
+    
+    
+    
     <StackPanel>
-        <Menu>
+        <Menu IsEnabled="{Binding ActiveMenue}">
             <MenuItem Header="_Users">
-                <MenuItem Header="Switch User" Click="muSwitchUser_click"/>
-                <MenuItem Header="Create User" Click="muCreateUser_click"/>
-                <MenuItem Header="Delete User" Click="muDeleteuser_click"/>
+                <MenuItem Header="Switch User" Command="{Binding SwitchUserCommand}"/>
+                <MenuItem Header="Add User" Command="{Binding AddUserCommand}"/>
+                <MenuItem Header="Delete User" Command="{Binding DeleteUserCommand}"/>
+                <MenuItem Header="Back to main app" Command="{Binding BackToAppCommand}"/>
                 </MenuItem>
         </Menu>
-        <Grid>
-      
-        <TabControl Width="Auto" Name="MyTabControl" Selector.SelectionChanged="OnTabSelectionChanged">
-            <TabItem Header="Input">
-                <Grid Background="#FFE5E5E5" Name="InputGrid">
-                
-
-                </Grid>
-
-            </TabItem>
-            <TabItem Header="Data" >
-                    <Grid Name="DataTabHolder"/>
-                </TabItem>
-        </TabControl>
-
-    </Grid>
+        <ContentControl Content="{Binding CurrentView}"/>
     </StackPanel>
 </Window>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shapes;
 using FinanceHub.DataBase;
-using FinanceHub.Models;
+using FinanceHub.Model;
 
 namespace FinanceHub.Controllers
 {

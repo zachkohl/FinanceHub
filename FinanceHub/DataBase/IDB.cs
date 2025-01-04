@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FinanceHub.Models;
+using FinanceHub.Model;
 
 namespace FinanceHub.DataBase
 {

@@ -8,7 +8,7 @@ using FinanceHub.Controllers;
 using FinanceHub.DataBase;
 using Moq;
 using System.Text.Json;
-using FinanceHub.Models;
+using FinanceHub.Model;
 
 namespace FinanceHub.Tests
 

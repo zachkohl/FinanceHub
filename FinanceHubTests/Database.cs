@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using FinanceHub.Controllers;
 using FinanceHub.DataBase;
-using FinanceHub.Models;
+using FinanceHub.Model;
 
 namespace FinanceHub.Tests
 {

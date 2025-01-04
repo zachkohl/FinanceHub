@@ -16,34 +16,18 @@ using FinanceHub.Controllers;
 using FinanceHub;
 using static FinanceHub.MainWindow;
 
-namespace FinanceHub.Views
+namespace FinanceHub.View
 {
     /// <summary>
     /// Interaction logic for AddUser.xaml
     /// </summary>
     public partial class AddUser : UserControl
     {
-        public Users _users;
-        public resetToInputView _callback;
-        public AddUser(Users users, resetToInputView callback)
+
+        public AddUser()
         {
-            _callback = callback;
-            _users = users;
             InitializeComponent();
         }
 
-        void OnSubmitCandidateNameClick(object sender, RoutedEventArgs e) 
-        {
-          bool success = _users.CreateUser(CandidateName.Text);
-            if (success == false)
-            {
-                MessageBox.Show("Name must be made of only letters", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            if (success == true)
-            {
-                _callback();
-            }
-
-        }
     }
 }

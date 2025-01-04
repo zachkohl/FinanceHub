@@ -2,8 +2,37 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:FinanceHub"
+             xmlns:view="clr-namespace:FinanceHub.View"
+             xmlns:vm="clr-namespace:FinanceHub.ViewModel"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            
+            <DataTemplate DataType="{x:Type vm:AddUserVM}">
+                <view:AddUser/>
+            </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type vm:DataTableVM}">
+                <view:DataTabView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:InputDataAreaVM}">
+                <view:InputDataArea/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:DeleteUserVM}">
+                <view:DeleteUser/>
+            </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type vm:SwitchUserVM}">
+                <view:SwitchUser/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:TabAreaVM}">
+                <view:TabArea/>
+            </DataTemplate>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

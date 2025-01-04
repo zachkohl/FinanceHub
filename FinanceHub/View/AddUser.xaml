@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="FinanceHub.Views.AddUser"
+﻿<UserControl x:Class="FinanceHub.View.AddUser"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FinanceHub.Views"
+             xmlns:local="clr-namespace:FinanceHub.View"
               xmlns:master="clr-namespace:FinanceHub"
              mc:Ignorable="d" 
              
@@ -14,10 +14,10 @@
             <TextBlock Text="Please Add User"/>
             <TextBlock Text="Note: only Letters can be used"/>
             <Label>
-            <TextBox Width="200" Name="CandidateName"/>
+                <TextBox Width="200" Text="{Binding CandidateName, UpdateSourceTrigger=PropertyChanged}"/>
             </Label>
             <Label>
-                <Button Name="Submit" Width="200" Click="OnSubmitCandidateNameClick" ClickMode="Press">Submit</Button>
+                <Button Command="{Binding AddUserCommand}" Width="200" >Submit</Button>
             </Label>
         </StackPanel>
 

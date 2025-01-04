@@ -8,7 +8,7 @@ using System.Windows;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using FinanceHub.Models;
+using FinanceHub.Model;
 
 namespace FinanceHub.DataBase
 {
