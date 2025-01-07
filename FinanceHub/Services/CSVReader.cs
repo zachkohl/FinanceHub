@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 using FinanceHub.DataBase;
 using FinanceHub.Model;
 
-namespace FinanceHub.Controllers
+namespace FinanceHub.Services
 {
     public  class CSVReader()
     {

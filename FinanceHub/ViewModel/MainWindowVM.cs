@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 using FinanceHub.DataBase;
 using FinanceHub.View;
 using System.IO;
@@ -16,8 +16,8 @@ namespace FinanceHub.ViewModel
     public class MainWindowVM : ViewModelBase
     {
         private object _currentView=null!;
-        internal Users _users;
-        internal TabHolder _tabHolder;
+        internal UsersService _users;
+        internal TabHolderService _tabHolder;
         internal resetToInputView _resetInputView;
 
         public object CurrentView
@@ -49,8 +49,8 @@ namespace FinanceHub.ViewModel
 
         public MainWindowVM()
         {
-            _users = new Users(new FileSystem(), new DBWrapper());
-            _tabHolder = new TabHolder(new FileSystem());
+            _users = new UsersService(new FileSystem(), new DBWrapper());
+            _tabHolder = new TabHolderService(new FileSystem());
             _users.GetCurrentUser();
             _resetInputView = () =>
             {

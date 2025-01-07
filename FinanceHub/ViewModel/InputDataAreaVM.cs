@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 using Microsoft.Win32;
 
 namespace FinanceHub.ViewModel
 {
     public class InputDataAreaVM:ViewModelBase
     {
-       private Users _users;
-       public InputDataAreaVM(Users users)
+       private UsersService _users;
+       public InputDataAreaVM(UsersService users)
         {
             _users = users;
             AddTransactionsCommand = new RelayCommand(AddTransactions);

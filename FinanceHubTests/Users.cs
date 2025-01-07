@@ -4,7 +4,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 using FinanceHub.DataBase;
 using Moq;
 using System.Text.Json;
@@ -48,7 +48,7 @@ namespace FinanceHub.Tests
             Moq.Language.Flow.IReturnsResult<IFile> returnsResult = Mock.Get(internalFile).Setup(f => f.ReadAllText(It.IsAny<string>())).Returns(prepSettings(settings: new FinanceHubSettings { CurrentTab = 0, CurrentUser = name, Users = name == null ? [] : [name] }));
             var fileSystem = Mock.Of<IFileSystem>();
             Mock.Get(fileSystem).Setup(static f => f.File).Returns(internalFile);
-            Users MyUsers = new Users(fileSystem,_db);
+            UsersService MyUsers = new UsersService(fileSystem,_db);
             var MyUser = MyUsers.GetCurrentUser();
             if (name == null)
             {
@@ -77,7 +77,7 @@ namespace FinanceHub.Tests
 
 
             //Act
-            Users MyUsers = new Users(fileSystem,_db);
+            UsersService MyUsers = new UsersService(fileSystem,_db);
             MyUsers.CreateUser(_name);
 
             ////Assert
@@ -104,7 +104,7 @@ namespace FinanceHub.Tests
 
 
             //Act
-            Users MyUsers = new Users(fileSystem, _db);
+            UsersService MyUsers = new UsersService(fileSystem, _db);
            bool success= MyUsers.CreateUser(name);
 
             //Assert
@@ -132,7 +132,7 @@ namespace FinanceHub.Tests
 
 
             //Act
-            Users MyUsers = new Users(fileSystem, mockDb);
+            UsersService MyUsers = new UsersService(fileSystem, mockDb);
             MyUsers.SwitchUser(newName);
 
 
@@ -162,7 +162,7 @@ namespace FinanceHub.Tests
 
 
             //Act
-            Users MyUsers = new Users(fileSystem, mockDb);
+            UsersService MyUsers = new UsersService(fileSystem, mockDb);
             MyUsers.DeleteUser(removeName);
 
             //Assert
@@ -190,7 +190,7 @@ public void Users_GetUsersNotCurrentUser_ReturnsAListOfUsersButNotTheCurrentUser
 
 
             //Act
-            Users MyUsers = new Users(fileSystem, mockDb);
+            UsersService MyUsers = new UsersService(fileSystem, mockDb);
             List<string> list = MyUsers.GetUsersNotCurrentUser();
 
 
@@ -226,7 +226,7 @@ public void Users_processFileForActiveUser_processesCSVFile()
             Mock.Get(fileSystem).Setup(static f => f.File).Returns(internalFile);
             var mockDb = Mock.Of<IDB>();
             Mock.Get(mockDb).Setup(static db => db.saveTransactions(It.IsAny<List<Transaction>>()));
-            Users myUsers = new Users(fileSystem, mockDb);
+            UsersService myUsers = new UsersService(fileSystem, mockDb);
 
 
             //Act

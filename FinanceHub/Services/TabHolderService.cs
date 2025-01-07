@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 using FinanceHub.DataBase;
 using Microsoft.VisualBasic;
 
-namespace FinanceHub.Controllers
+namespace FinanceHub.Services
 {
-    internal class TabHolder: RememberState
+    internal class TabHolderService: RememberStateBase
     {
       
-        public TabHolder(IFileSystem fileSystem) : base(fileSystem)
+        public TabHolderService(IFileSystem fileSystem) : base(fileSystem)
         { }   
         
         public enum TabOptions  {Input, Data}

@@ -9,9 +9,9 @@ using FinanceHub.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace FinanceHub.Controllers
+namespace FinanceHub.Services
 {
-   public abstract class RememberState
+   public abstract class RememberStateBase
     {
         internal string _fileName = "settings.json";
 
@@ -19,7 +19,7 @@ namespace FinanceHub.Controllers
 
         
 
-        public RememberState(IFileSystem fileSystem)
+        public RememberStateBase(IFileSystem fileSystem)
         {
             this._fileSystem = fileSystem;
        

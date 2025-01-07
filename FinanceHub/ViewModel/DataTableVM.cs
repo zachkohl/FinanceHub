@@ -4,14 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 using FinanceHub.Model;
 
 namespace FinanceHub.ViewModel
 {
     internal class DataTableVM:ViewModelBase
     {
-        private Users _users;
+        private UsersService _users;
 
 
         private ObservableCollection<Transaction> transactions=null!;
@@ -22,7 +22,7 @@ namespace FinanceHub.ViewModel
             set { transactions = value; }
         }
 
-        public DataTableVM(Users users)
+        public DataTableVM(UsersService users)
         {
             _users = users;
             Transactions = new ObservableCollection<Transaction>(_users.GetAllTransactions());

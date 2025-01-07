@@ -10,9 +10,9 @@ using FinanceHub.DataBase;
 using Microsoft.EntityFrameworkCore;
 using FileHelpers;
 using FinanceHub.Model;
-namespace FinanceHub.Controllers
+namespace FinanceHub.Services
 {
-    public class Users(IFileSystem fileSystem, IDB DbWrapper) : RememberState(fileSystem)
+    public class UsersService(IFileSystem fileSystem, IDB DbWrapper) : RememberStateBase(fileSystem)
     {
         IDB _db = DbWrapper;
         User? _user;

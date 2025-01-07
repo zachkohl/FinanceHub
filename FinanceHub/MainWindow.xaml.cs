@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 using System.IO;
 using System.IO.Abstractions;
 using FinanceHub.DataBase;
@@ -23,7 +23,7 @@ namespace FinanceHub
     public partial class MainWindow : Window
     {
 
-        internal Users _users=null!;
+        internal UsersService _users=null!;
         internal resetToInputView _resetInputView=null!;
         public MainWindow()
         {

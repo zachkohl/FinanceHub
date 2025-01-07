@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 using System.Windows.Input;
 using System.Windows;
 
@@ -12,9 +12,9 @@ namespace FinanceHub.ViewModel
 {
   public  class SelectUserBase : ViewModelBase
     {
-        public Users? _users;
+        public UsersService? _users;
         public resetToInputView _callback;
-        public SelectUserBase(Users users, resetToInputView callback)
+        public SelectUserBase(UsersService users, resetToInputView callback)
         {
             _users = users;
             _callback = callback;

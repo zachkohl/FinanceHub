@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers.Interfaces;
 using Moq;
 using Xunit;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 using Castle.DynamicProxy;
 namespace FinanceHub.Tests
 {
@@ -36,7 +36,7 @@ namespace FinanceHub.Tests
 
 
 
-            var TablHolder = new TabHolder(fileSystem);
+            var TablHolder = new TabHolderService(fileSystem);
 
             //Act
 
@@ -51,8 +51,8 @@ namespace FinanceHub.Tests
 
 
         [Theory]
-        [InlineData((int)TabHolder.TabOptions.Input)]
-        [InlineData((int)TabHolder.TabOptions.Data)]
+        [InlineData((int)TabHolderService.TabOptions.Input)]
+        [InlineData((int)TabHolderService.TabOptions.Data)]
         public void TabHolder_getStartingTab_returnsCorrectTabFromFile(int tab)
         {
             //Arrange
@@ -63,7 +63,7 @@ namespace FinanceHub.Tests
                var file = Mock.Of<IFile>();
             Mock.Get(file).Setup(f => f.Exists(It.IsAny<string>())).Returns(true);
             //Act
-            TabHolder MyTablHolder = new TabHolder(fileSystem);
+            TabHolderService MyTablHolder = new TabHolderService(fileSystem);
 
             FinanceHubSettings settings = MyTablHolder.GetStartingTab();
 
@@ -83,7 +83,7 @@ namespace FinanceHub.Tests
 
             var fileSystem = SetupMultiLevelFileMock(internalFile);
 
-            var MyTablHolder = new TabHolder(fileSystem);
+            var MyTablHolder = new TabHolderService(fileSystem);
 
             //Act
             MyTablHolder.SaveTab(0);

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 
 namespace FinanceHub.ViewModel
 {
-    internal class DeleteUserVM(Users users, resetToInputView callback) : SelectUserBase(users, callback)
+    internal class DeleteUserVM(UsersService users, resetToInputView callback) : SelectUserBase(users, callback)
     {
 
 

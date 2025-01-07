@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 
 namespace FinanceHub.ViewModel
 {
     internal class TabAreaVM: ViewModelBase
     {
-        public Users _users;
-		public TabHolder _tabHolder;
+        public UsersService _users;
+		public TabHolderService _tabHolder;
         private object _currentView = null!;
         public object CurrentView
         {
@@ -34,7 +34,7 @@ namespace FinanceHub.ViewModel
             set { dataView = value; OnPropertyChanged(); }
         }
 
-        public TabAreaVM(Users users, TabHolder tabHolder)
+        public TabAreaVM(UsersService users, TabHolderService tabHolder)
 		{
 			_users = users;
 			_tabHolder = tabHolder;

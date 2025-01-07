@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 using FinanceHub.Model;
 using FinanceHub.View;
 
 namespace FinanceHub.ViewModel
 {
-    public class SwitchUserVM(Users users, resetToInputView callback) : SelectUserBase(users,callback)
+    public class SwitchUserVM(UsersService users, resetToInputView callback) : SelectUserBase(users,callback)
     {
       
 

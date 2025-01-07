@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using FinanceHub.Controllers;
+using FinanceHub.Services;
 
 namespace FinanceHub.ViewModel
 {
     internal class AddUserVM:ViewModelBase
     {
-        public Users _users;
+        public UsersService _users;
         public resetToInputView _callback;
         public string? CandidateName { get; set; }
 
@@ -31,7 +31,7 @@ namespace FinanceHub.ViewModel
         }
 
 
-        public AddUserVM(Users users, resetToInputView callback)
+        public AddUserVM(UsersService users, resetToInputView callback)
         {
             _users = users;
             _callback = callback;
