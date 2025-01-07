@@ -226,11 +226,11 @@ public void Users_processFileForActiveUser_processesCSVFile()
             Mock.Get(fileSystem).Setup(static f => f.File).Returns(internalFile);
             var mockDb = Mock.Of<IDB>();
             Mock.Get(mockDb).Setup(static db => db.saveTransactions(It.IsAny<List<Transaction>>()));
-            UsersService myUsers = new UsersService(fileSystem, mockDb);
+            TransactionsService myTransactionService = new TransactionsService(mockDb, fileSystem);
 
 
             //Act
-            myUsers.processFileForActiveUser("testFilePath");
+            myTransactionService.processFileForActiveUser("testFilePath");
 
             //Assert
               Mock.Get(mockDb).Verify(db => db.saveTransactions(It.IsAny<List<Transaction>>()));

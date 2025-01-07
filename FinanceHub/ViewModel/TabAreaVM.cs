@@ -9,7 +9,7 @@ namespace FinanceHub.ViewModel
 {
     internal class TabAreaVM: ViewModelBase
     {
-        public UsersService _users;
+        public TransactionsService _transactionsService;
 		public TabHolderService _tabHolder;
         private object _currentView = null!;
         public object CurrentView
@@ -34,16 +34,16 @@ namespace FinanceHub.ViewModel
             set { dataView = value; OnPropertyChanged(); }
         }
 
-        public TabAreaVM(UsersService users, TabHolderService tabHolder)
+        public TabAreaVM(TransactionsService transactionsService, TabHolderService tabHolder)
 		{
-			_users = users;
+			_transactionsService = transactionsService;
 			_tabHolder = tabHolder;
             var currentTab = _tabHolder.GetStartingTab().CurrentTab;
 			SelectedTab = currentTab;
 
 
-            InputDataView = new InputDataAreaVM(_users);
-            DataView= new DataTableVM(_users);
+            InputDataView = new InputDataAreaVM(_transactionsService);
+            DataView= new DataAreaVM(_transactionsService);
 
         }
 

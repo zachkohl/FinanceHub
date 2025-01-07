@@ -13,8 +13,8 @@
             </DataTemplate>
 
 
-            <DataTemplate DataType="{x:Type vm:DataTableVM}">
-                <view:DataTabView/>
+            <DataTemplate DataType="{x:Type vm:DataAreaVM}">
+                <view:DataAreaView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vm:InputDataAreaVM}">

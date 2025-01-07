@@ -9,9 +9,9 @@ using FinanceHub.Model;
 
 namespace FinanceHub.ViewModel
 {
-    internal class DataTableVM:ViewModelBase
+    internal class DataAreaVM:ViewModelBase
     {
-        private UsersService _users;
+        private TransactionsService _transactionsService;
 
 
         private ObservableCollection<Transaction> transactions=null!;
@@ -22,10 +22,10 @@ namespace FinanceHub.ViewModel
             set { transactions = value; }
         }
 
-        public DataTableVM(UsersService users)
+        public DataAreaVM(TransactionsService transactionsService)
         {
-            _users = users;
-            Transactions = new ObservableCollection<Transaction>(_users.GetAllTransactions());
+            _transactionsService = transactionsService;
+            Transactions = new ObservableCollection<Transaction>(_transactionsService.GetAllTransactions());
         }
 
 

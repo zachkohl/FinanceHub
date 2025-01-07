@@ -17,6 +17,7 @@ namespace FinanceHub.ViewModel
     {
         private object _currentView=null!;
         internal UsersService _users;
+        internal TransactionsService _transactionsService;
         internal TabHolderService _tabHolder;
         internal resetToInputView _resetInputView;
 
@@ -44,13 +45,15 @@ namespace FinanceHub.ViewModel
         private void SwitchUser(object obj) => CurrentView = new SwitchUserVM(_users, _resetInputView);
         private void AddUser(object obj) => CurrentView = new AddUserVM(_users, _resetInputView);
         private void DeleteUser(object obj) => CurrentView = new DeleteUserVM(_users, _resetInputView);
-        private void BackToApp(object obj) => CurrentView = new TabAreaVM(_users, _tabHolder);
+        private void BackToApp(object obj) => CurrentView = new TabAreaVM(_transactionsService, _tabHolder);
 
 
         public MainWindowVM()
         {
-            _users = new UsersService(new FileSystem(), new DBWrapper());
-            _tabHolder = new TabHolderService(new FileSystem());
+            IFileSystem fileSystem = new FileSystem();
+            _users = new UsersService(fileSystem, new DBWrapper());
+            _transactionsService = new TransactionsService(_users.provideUserDB(), fileSystem);
+            _tabHolder = new TabHolderService(fileSystem);
             _users.GetCurrentUser();
             _resetInputView = () =>
             {
@@ -63,7 +66,7 @@ namespace FinanceHub.ViewModel
                 {
                     ActiveMenue = true;
                 }
-                CurrentView = new TabAreaVM(_users, _tabHolder);
+                CurrentView = new TabAreaVM(_transactionsService, _tabHolder);
             };
 
 
@@ -81,7 +84,7 @@ namespace FinanceHub.ViewModel
             }
             else
             {
-                CurrentView = new TabAreaVM(_users, _tabHolder);
+                CurrentView = new TabAreaVM(_transactionsService, _tabHolder);
                 ActiveMenue = true;
             }
 

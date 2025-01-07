@@ -116,25 +116,14 @@ namespace FinanceHub.Services
             return list;
         }
 
-        public bool processFileForActiveUser(string path)
-        {
 
-            if (_fileSystem.File.Exists(path) == false)
-            {
-                throw new Exception("cannot find file");
+
+        public IDB provideUserDB()
+        {
+            if (_db == null) {
+                throw new Exception("User db not specified");
             }
-            var csvString = _fileSystem.File.ReadAllText(path);
-
-            var transactions = CSVReader.Process(csvString);
-
-
-            _db.saveTransactions(transactions);
-            return true;
-        }
-
-        public List<Transaction> GetAllTransactions()
-        {
-            return _db.GetAllTransactions();
+            return _db;
         }
 
     }

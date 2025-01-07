@@ -12,10 +12,10 @@ namespace FinanceHub.ViewModel
 {
     public class InputDataAreaVM:ViewModelBase
     {
-       private UsersService _users;
-       public InputDataAreaVM(UsersService users)
+       private TransactionsService _transactionsService;
+       public InputDataAreaVM(TransactionsService transactionsService)
         {
-            _users = users;
+            _transactionsService = transactionsService;
             AddTransactionsCommand = new RelayCommand(AddTransactions);
         }
 
@@ -33,7 +33,7 @@ namespace FinanceHub.ViewModel
             }
 
             string path = fileDialog.FileName;
-            bool processed = _users.processFileForActiveUser(path);
+            bool processed = _transactionsService.processFileForActiveUser(path);
             if (processed == true)
             {
                 MessageBox.Show("File successfully processed!", "success", MessageBoxButton.OK);

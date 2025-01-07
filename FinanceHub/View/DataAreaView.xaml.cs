@@ -19,11 +19,11 @@ namespace FinanceHub.View
     /// <summary>
     /// Interaction logic for DataTabView.xaml
     /// </summary>
-    public partial class DataTabView : UserControl
+    public partial class DataAreaView : UserControl
     {
     
 
-        public DataTabView()
+        public DataAreaView()
         {
        
             InitializeComponent();
