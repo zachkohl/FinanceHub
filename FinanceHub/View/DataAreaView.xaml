@@ -10,9 +10,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel>
-            <DataGrid Name="DataGridTransactions" ItemsSource="{Binding Transactions}" Height="148" Width="500"/>
             <ContentControl Content="{Binding _CatagoryManagerView}"/>
-            
+            <DataGrid Name="DataGridTransactions" ItemsSource="{Binding Transactions}" Height="148" Width="500"/>
+            <TextBox Text="Spending Chart area"/>
         </StackPanel>
     </Grid>
 </UserControl>

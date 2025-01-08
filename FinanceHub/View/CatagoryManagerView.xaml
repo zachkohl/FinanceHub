@@ -6,19 +6,53 @@
              xmlns:local="clr-namespace:FinanceHub.View"
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:FinanceHub.ViewModel"
+     
              d:DataContext="{d:DesignInstance Type=vm:CatagoryManagerVM, IsDesignTimeCreatable=True}"
 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <TextBlock Text="catagory manager"/>
-        <ListView Name="lvCatagories" ItemsSource="{Binding Catagories}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding}"/>
-                    </StackPanel>
+    <Border BorderBrush="Black" BorderThickness="5">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock  Grid.Row="0" Text="{Binding _Color}"/>
+            <ListView Grid.Row="1" Grid.RowSpan="3" Name="lvCatagories" ItemsSource="{Binding Catagories}" Margin="5">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="change color"></MenuItem>
+                        <MenuItem Header="change text"></MenuItem>
+                        <MenuItem Header="remove catagory"></MenuItem>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.ItemTemplate>
+                <DataTemplate >
+                       
+                        <DockPanel>
+                           
+                            <Rectangle Height="20" Width="20" Fill="{Binding color}" Visibility="Visible" Margin="0,0,15,0" />
+                            <TextBlock Text="{Binding name}" />
+                        </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackPanel>
+            
+            <StackPanel  Grid.Row="1" Grid.Column="1" Margin="5">
+            <TextBox Width="300" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left"
+                     DockPanel.Dock="Left"/>
+                <DockPanel>
+                    <Button Width="100" DockPanel.Dock="Left" Command="{Binding PickColorCommand}">pick color</Button>
+                    
+                    <Button  Width="100" Height="20"  DockPanel.Dock="Right">Add catgory</Button>
+                </DockPanel>
+            </StackPanel> 
+            
+        </Grid>
+        
+    </Border>
 </UserControl>
