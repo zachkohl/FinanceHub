@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FinanceHub.Services;
 using FinanceHub.Model;
+using System.Data;
 
 namespace FinanceHub.ViewModel
 {
@@ -22,10 +23,19 @@ namespace FinanceHub.ViewModel
             set { transactions = value; }
         }
 
+
+        private object _catagoryManagerView = null!;
+        public object _CatagoryManagerView
+        {
+            get { return _catagoryManagerView; }
+            set { _catagoryManagerView = value; OnPropertyChanged(); }
+        }
+
         public DataAreaVM(TransactionsService transactionsService)
         {
             _transactionsService = transactionsService;
             Transactions = new ObservableCollection<Transaction>(_transactionsService.GetAllTransactions());
+            _CatagoryManagerView = new CatagoryManagerVM(_transactionsService);
         }
 
 

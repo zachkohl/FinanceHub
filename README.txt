@@ -1,0 +1,3 @@
+# FinanceHub
+
+A C# exploration
