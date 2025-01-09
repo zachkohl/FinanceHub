@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FinanceHub.Services;
 using FinanceHub.Model;
 using System.Data;
+using FinanceHub.View;
 
 namespace FinanceHub.ViewModel
 {
@@ -24,6 +25,15 @@ namespace FinanceHub.ViewModel
         }
 
 
+   
+
+        private object _spendingChartView = null!;
+        public object _SpendingChartView
+        {
+            get { return _spendingChartView; }
+            set { _spendingChartView = value; OnPropertyChanged(); }
+        }
+
         private object _catagoryManagerView = null!;
         public object _CatagoryManagerView
         {
@@ -36,6 +46,7 @@ namespace FinanceHub.ViewModel
             _transactionsService = transactionsService;
             Transactions = new ObservableCollection<Transaction>(_transactionsService.GetAllTransactions());
             _CatagoryManagerView = new CatagoryManagerVM(_transactionsService);
+            _SpendingChartView = new SpendingChartView("passed in title");
         }
 
 

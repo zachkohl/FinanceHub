@@ -26,6 +26,7 @@
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
+	  <PackageReference Include="ScottPlot.WPF" Version="5.0.51" />
 	  <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="21.1.7" />
 	</ItemGroup>
 
